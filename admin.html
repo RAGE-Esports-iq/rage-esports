@@ -2,32 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Rage Admin | لوحة التحكم الشاملة</title>
+    <title>Rage Admin | لوحة التحكم المطورة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
     <style>
         body { background: #080808; color: white; font-family: 'Cairo'; padding: 20px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid #333; }
-        h2 { color: #ff0000; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
-        .btn { background: #ff0000; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
+        h2 { color: #ff0000; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 10px; margin-top: 0; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; font-family: 'Cairo'; }
+        .btn { background: #ff0000; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; margin-top: 5px; }
         .btn:hover { background: #b30000; box-shadow: 0 0 10px #ff0000; }
-        .btn.delete { background: #333; font-size: 0.7rem; width: auto; padding: 5px 10px; }
-        .item-list { height: 120px; overflow-y: auto; background: #000; padding: 10px; margin-top: 10px; border-radius: 5px; font-size: 0.8rem; }
-        .item-list div { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #222; }
+        .btn.delete { background: #ff0000; font-size: 0.7rem; width: auto; padding: 5px 10px; }
+        .item-list { height: 150px; overflow-y: auto; background: #000; padding: 10px; margin-top: 10px; border-radius: 5px; font-size: 0.8rem; border: 1px solid #222; }
+        .item-list div { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #222; }
+        .item-list div:last-child { border-bottom: none; }
+        label { font-size: 0.8rem; color: #888; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-    <h1 style="text-align:center; color:red; margin-bottom:30px;">لوحة تحكم RAGE ESORTS</h1>
-
+    <h1 style="text-align:center; color:red; margin-bottom:30px; text-shadow: 0 0 15px rgba(255,0,0,0.3);">لوحة تحكم RAGE ESPORTS</h1>
+    
     <div class="admin-grid">
         <div class="box">
-            <h2>📢 الأخبار العامة</h2>
+            <h2>📢 الأخبار والإحصائيات</h2>
             <input type="text" id="news-in" placeholder="الخبر الجديد">
             <input type="number" id="cups-in" placeholder="عدد البطولات">
             <input type="number" id="members-in" placeholder="عدد الأعضاء">
-            <button class="btn" onclick="updateStats()">تحديث الموقع</button>
+            <button class="btn" onclick="updateStats()">تحديث البيانات الأساسية</button>
         </div>
 
         <div class="box">
@@ -37,27 +38,38 @@
             <button class="btn" onclick="addGame()">إضافة اللعبة</button>
             
             <div style="margin-top:20px; border-top:1px solid #333; padding-top:10px;">
+                <label>اختر اللعبة لإضافة لاعب إليها:</label>
                 <select id="game-select-admin"></select>
-                <input type="text" id="player-name" placeholder="اسم اللاعب الجديد">
+                <input type="text" id="player-name" placeholder="اسم اللاعب">
                 <input type="text" id="player-img" placeholder="رابط صورة اللاعب">
-                <button class="btn" onclick="addPlayer()">إضافة للفريق</button>
+                <input type="text" id="player-nat" placeholder="الجنسية (مثلاً: IQ)">
+                <input type="number" id="player-age" placeholder="العمر">
+                <button class="btn" onclick="addPlayer()">إضافة اللاعب للفريق</button>
             </div>
         </div>
 
         <div class="box">
-            <h2>🖼️ إضافة للمعرض (Media)</h2>
-            <input type="text" id="media-url" placeholder="رابط الصورة أو فيديو يوتيوب">
+            <h2>🖼️ إدارة المعرض (Media)</h2>
+            <input type="text" id="media-url" placeholder="رابط يوتيوب أو صورة">
             <select id="media-type">
-                <option value="image">صورة (Image)</option>
-                <option value="video">فيديو يوتيوب (YouTube)</option>
+                <option value="image">صورة</option>
+                <option value="video">فيديو يوتيوب</option>
             </select>
             <button class="btn" onclick="addMedia()">إضافة للمعرض</button>
+            <label>العناصر الحالية:</label>
             <div id="media-list" class="item-list"></div>
         </div>
 
         <div class="box">
-            <h2>⚙️ حذف الألعاب</h2>
+            <h2>⚙️ حذف الألعاب واللاعبين</h2>
+            <label>قائمة الألعاب:</label>
             <div id="games-list" class="item-list"></div>
+            
+            <div style="margin-top:20px; border-top:1px solid #333; padding-top:10px;">
+                <label>عرض لاعبي لعبة معينة لحذفهم:</label>
+                <select id="game-view-select" onchange="loadPlayersForDelete()"></select>
+                <div id="players-delete-list" class="item-list"></div>
+            </div>
         </div>
     </div>
 
@@ -71,13 +83,14 @@
             projectId: "rageesports-iq",
             storageBucket: "rageesports-iq.firebasestorage.app",
             messagingSenderId: "287821557091",
-            appId: "1:287821557091:web:fd497c7ab12bc3af9e7756"
+            appId: "1:287821557091:web:fd497c7ab12bc3af9e7756",
+            databaseURL: "https://rageesports-iq-default-rtdb.firebaseio.com"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // وظائف التحكم
+        // تحديث الإحصائيات
         window.updateStats = () => {
             const news = document.getElementById('news-in').value;
             const cups = document.getElementById('cups-in').value;
@@ -85,47 +98,101 @@
             if(news) set(ref(db, 'siteData/currentNews'), news);
             if(cups) set(ref(db, 'siteData/stats/cups'), cups);
             if(members) set(ref(db, 'siteData/stats/members'), members);
-            alert("تم التحديث!");
+            alert("✅ تم تحديث الإحصائيات بنجاح!");
         };
 
+        // إضافة لعبة
         window.addGame = () => {
             const name = document.getElementById('game-name').value;
             const img = document.getElementById('game-img').value;
-            if(name) push(ref(db, 'siteData/games'), { nameAr: name, img: img || 'default.jpg' });
+            if(name) {
+                push(ref(db, 'siteData/games'), { nameAr: name, img: img || 'logo.png' });
+                document.getElementById('game-name').value = "";
+                document.getElementById('game-img').value = "";
+                alert("🎮 تم إضافة اللعبة!");
+            }
         };
 
+        // إضافة لاعب
         window.addPlayer = () => {
             const gid = document.getElementById('game-select-admin').value;
             const name = document.getElementById('player-name').value;
             const img = document.getElementById('player-img').value;
-            if(gid && name) push(ref(db, `siteData/games/${gid}/players`), { name: name, img: img });
+            const nat = document.getElementById('player-nat').value;
+            const age = document.getElementById('player-age').value;
+            if(gid && name) {
+                push(ref(db, `siteData/games/${gid}/players`), { name, img: img || 'logo.png', nat: nat || 'IQ', age: age || '18' });
+                alert("👤 تم إضافة اللاعب!");
+                document.getElementById('player-name').value = "";
+            } else {
+                alert("يرجى اختيار لعبة وإدخال اسم اللاعب");
+            }
         };
 
+        // إضافة ميديا
         window.addMedia = () => {
             const url = document.getElementById('media-url').value;
             const type = document.getElementById('media-type').value;
-            if(url) push(ref(db, 'siteData/media'), { url: url, type: type });
+            if(url) {
+                push(ref(db, 'siteData/media'), { url, type });
+                document.getElementById('media-url').value = "";
+                alert("🖼️ تم الإضافة للمعرض!");
+            }
         };
 
-        window.deleteItem = (path) => { if(confirm("هل أنت متأكد؟")) remove(ref(db, path)); };
+        // دالة الحذف العامة
+        window.deleteItem = (path) => { 
+            if(confirm("هل أنت متأكد من الحذف نهائياً؟")) {
+                remove(ref(db, path)); 
+            }
+        };
 
-        // مراقبة البيانات لعرض القوائم
+        // تحميل قائمة اللاعبين للحذف عند تغيير اللعبة
+        window.loadPlayersForDelete = () => {
+            const gid = document.getElementById('game-view-select').value;
+            const pList = document.getElementById('players-delete-list');
+            pList.innerHTML = "جاري التحميل...";
+            
+            if(!gid) return pList.innerHTML = "اختر لعبة أولاً";
+
+            onValue(ref(db, `siteData/games/${gid}/players`), (snap) => {
+                const players = snap.val();
+                pList.innerHTML = "";
+                if(players) {
+                    Object.keys(players).forEach(pid => {
+                        pList.innerHTML += `<div>${players[pid].name} <button class="btn delete" onclick="deleteItem('siteData/games/${gid}/players/${pid}')">حذف اللاعب</button></div>`;
+                    });
+                } else {
+                    pList.innerHTML = "لا يوجد لاعبين في هذه اللعبة";
+                }
+            });
+        };
+
+        // مراقبة البيانات وتحديث القوائم تلقائياً
         onValue(ref(db, 'siteData'), (snap) => {
-            const data = snap.val();
+            const data = snap.val() || {};
             const gList = document.getElementById('games-list');
             const mList = document.getElementById('media-list');
-            const gSelect = document.getElementById('game-select-admin');
+            const gSelectAdd = document.getElementById('game-select-admin');
+            const gSelectView = document.getElementById('game-view-select');
             
-            gList.innerHTML = ""; gSelect.innerHTML = ""; mList.innerHTML = "";
+            gList.innerHTML = ""; gSelectAdd.innerHTML = ""; gSelectView.innerHTML = '<option value="">-- اختر --</option>'; mList.innerHTML = "";
             
-            if(data.games) Object.keys(data.games).forEach(id => {
-                gList.innerHTML += `<div>${data.games[id].nameAr} <button class="btn delete" onclick="deleteItem('siteData/games/${id}')">حذف</button></div>`;
-                gSelect.innerHTML += `<option value="${id}">${data.games[id].nameAr}</option>`;
-            });
+            // تحديث قوائم الألعاب
+            if(data.games) {
+                Object.keys(data.games).forEach(id => {
+                    gList.innerHTML += `<div><strong>${data.games[id].nameAr}</strong> <button class="btn delete" onclick="deleteItem('siteData/games/${id}')">حذف اللعبة</button></div>`;
+                    gSelectAdd.innerHTML += `<option value="${id}">${data.games[id].nameAr}</option>`;
+                    gSelectView.innerHTML += `<option value="${id}">${data.games[id].nameAr}</option>`;
+                });
+            }
             
-            if(data.media) Object.keys(data.media).forEach(id => {
-                mList.innerHTML += `<div>${data.media[id].type} <button class="btn delete" onclick="deleteItem('siteData/media/${id}')">حذف</button></div>`;
-            });
+            // تحديث قائمة المعرض
+            if(data.media) {
+                Object.keys(data.media).forEach(id => {
+                    mList.innerHTML += `<div>${data.media[id].type === 'video' ? '📽️ فيديو' : '🖼️ صورة'} <button class="btn delete" onclick="deleteItem('siteData/media/${id}')">حذف</button></div>`;
+                });
+            }
         });
     </script>
 </body>
