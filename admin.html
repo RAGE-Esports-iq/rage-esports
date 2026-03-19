@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Rage Admin | لوحة التحكم الشاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body { background: #080808; color: white; font-family: 'Cairo'; padding: 20px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid #333; }
+        h2 { color: #ff0000; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
+        .btn { background: #ff0000; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
+        .btn:hover { background: #b30000; box-shadow: 0 0 10px #ff0000; }
+        .btn.delete { background: #333; font-size: 0.7rem; width: auto; padding: 5px 10px; }
+        .item-list { height: 120px; overflow-y: auto; background: #000; padding: 10px; margin-top: 10px; border-radius: 5px; font-size: 0.8rem; }
+        .item-list div { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #222; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align:center; color:red; margin-bottom:30px;">لوحة تحكم RAGE ESORTS</h1>
+
+    <div class="admin-grid">
+        <div class="box">
+            <h2>📢 الأخبار العامة</h2>
+            <input type="text" id="news-in" placeholder="الخبر الجديد">
+            <input type="number" id="cups-in" placeholder="عدد البطولات">
+            <input type="number" id="members-in" placeholder="عدد الأعضاء">
+            <button class="btn" onclick="updateStats()">تحديث الموقع</button>
+        </div>
+
+        <div class="box">
+            <h2>🎮 إضافة لعبة وللاعبين</h2>
+            <input type="text" id="game-name" placeholder="اسم اللعبة">
+            <input type="text" id="game-img" placeholder="رابط غلاف اللعبة">
+            <button class="btn" onclick="addGame()">إضافة اللعبة</button>
+            
+            <div style="margin-top:20px; border-top:1px solid #333; padding-top:10px;">
+                <select id="game-select-admin"></select>
+                <input type="text" id="player-name" placeholder="اسم اللاعب الجديد">
+                <input type="text" id="player-img" placeholder="رابط صورة اللاعب">
+                <button class="btn" onclick="addPlayer()">إضافة للفريق</button>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>🖼️ إضافة للمعرض (Media)</h2>
+            <input type="text" id="media-url" placeholder="رابط الصورة أو فيديو يوتيوب">
+            <select id="media-type">
+                <option value="image">صورة (Image)</option>
+                <option value="video">فيديو يوتيوب (YouTube)</option>
+            </select>
+            <button class="btn" onclick="addMedia()">إضافة للمعرض</button>
+            <div id="media-list" class="item-list"></div>
+        </div>
+
+        <div class="box">
+            <h2>⚙️ حذف الألعاب</h2>
+            <div id="games-list" class="item-list"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDo0jp7N7wzNXKM81sELGmUhA9QePDOL7g",
+            authDomain: "rageesports-iq.firebaseapp.com",
+            projectId: "rageesports-iq",
+            storageBucket: "rageesports-iq.firebasestorage.app",
+            messagingSenderId: "287821557091",
+            appId: "1:287821557091:web:fd497c7ab12bc3af9e7756"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // وظائف التحكم
+        window.updateStats = () => {
+            const news = document.getElementById('news-in').value;
+            const cups = document.getElementById('cups-in').value;
+            const members = document.getElementById('members-in').value;
+            if(news) set(ref(db, 'siteData/currentNews'), news);
+            if(cups) set(ref(db, 'siteData/stats/cups'), cups);
+            if(members) set(ref(db, 'siteData/stats/members'), members);
+            alert("تم التحديث!");
+        };
+
+        window.addGame = () => {
+            const name = document.getElementById('game-name').value;
+            const img = document.getElementById('game-img').value;
+            if(name) push(ref(db, 'siteData/games'), { nameAr: name, img: img || 'default.jpg' });
+        };
+
+        window.addPlayer = () => {
+            const gid = document.getElementById('game-select-admin').value;
+            const name = document.getElementById('player-name').value;
+            const img = document.getElementById('player-img').value;
+            if(gid && name) push(ref(db, `siteData/games/${gid}/players`), { name: name, img: img });
+        };
+
+        window.addMedia = () => {
+            const url = document.getElementById('media-url').value;
+            const type = document.getElementById('media-type').value;
+            if(url) push(ref(db, 'siteData/media'), { url: url, type: type });
+        };
+
+        window.deleteItem = (path) => { if(confirm("هل أنت متأكد؟")) remove(ref(db, path)); };
+
+        // مراقبة البيانات لعرض القوائم
+        onValue(ref(db, 'siteData'), (snap) => {
+            const data = snap.val();
+            const gList = document.getElementById('games-list');
+            const mList = document.getElementById('media-list');
+            const gSelect = document.getElementById('game-select-admin');
+            
+            gList.innerHTML = ""; gSelect.innerHTML = ""; mList.innerHTML = "";
+            
+            if(data.games) Object.keys(data.games).forEach(id => {
+                gList.innerHTML += `<div>${data.games[id].nameAr} <button class="btn delete" onclick="deleteItem('siteData/games/${id}')">حذف</button></div>`;
+                gSelect.innerHTML += `<option value="${id}">${data.games[id].nameAr}</option>`;
+            });
+            
+            if(data.media) Object.keys(data.media).forEach(id => {
+                mList.innerHTML += `<div>${data.media[id].type} <button class="btn delete" onclick="deleteItem('siteData/media/${id}')">حذف</button></div>`;
+            });
+        });
+    </script>
+</body>
+</html>

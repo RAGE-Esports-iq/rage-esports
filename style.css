@@ -1,0 +1,106 @@
+:root {
+    --primary: #ff0000;
+    --bg-black: #050505;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+    --discord-color: #5865F2;
+    --instagram-color: #E4405F;
+    --youtube-color: #FF0000; /* Added YouTube Color */
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    color: white;
+    background-color: var(--bg-black);
+    background: url('background.jpg') no-repeat center center fixed !important; 
+    background-size: cover !important; 
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); z-index: -1;
+}
+
+.news-ticker {
+    background: var(--primary); padding: 10px 0; position: fixed;
+    top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 15px rgba(255, 0, 0, 0.3);
+}
+.ticker-wrapper { display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; }
+@keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+nav {
+    position: fixed; top: 45px; width: 92%; left: 4%;
+    background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(15px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 35px; border-radius: 100px; border: 1px solid var(--border); z-index: 1000;
+}
+
+.logo { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 1.4rem; }
+.logo img { width: 45px; filter: drop-shadow(0 0 5px var(--primary)); }
+.logo span { color: var(--primary); }
+
+.nav-links { display: flex; list-style: none; gap: 25px; margin: 0; }
+.nav-links a { color: #ccc; text-decoration: none; font-weight: 700; transition: 0.3s; font-size: 0.95rem; }
+.nav-links a:hover { color: var(--primary); }
+
+.lang-btn {
+    background: transparent; border: 1px solid var(--primary); color: var(--primary);
+    padding: 6px 18px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;
+}
+.lang-btn:hover { background: var(--primary); color: white; box-shadow: 0 0 15px var(--primary); }
+
+.hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.hero h1 { font-size: 5rem; margin: 0; font-weight: 900; text-shadow: 0 0 30px rgba(255,0,0,0.5); }
+
+.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px 8%; }
+.game-card {
+    background: var(--glass); border: 1px solid var(--border); border-radius: 25px;
+    padding: 20px; transition: 0.4s; text-align: center; backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+.game-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 10px 40px rgba(255, 0, 0, 0.2); }
+.game-card img { width: 100%; border-radius: 18px; margin-bottom: 15px; }
+
+.players-container {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    border: 1px solid var(--primary);
+}
+.player-tag {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 15px;
+    background: var(--primary);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.social-container { display: flex; justify-content: center; gap: 20px; padding: 50px 0; flex-wrap: wrap; }
+.social-icon {
+    font-size: 1.8rem; color: white; width: 70px; height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; border: 2px solid var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+}
+.social-icon:hover { transform: translateY(-12px) scale(1.1); }
+.social-icon.discord:hover { background-color: var(--discord-color); box-shadow: 0 10px 25px var(--discord-color); }
+.social-icon.instagram:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); box-shadow: 0 10px 25px #d6249f; }
+.social-icon.tiktok:hover { background-color: #000; box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2); }
+.social-icon.youtube:hover { background-color: var(--youtube-color); box-shadow: 0 10px 25px var(--youtube-color); }
+
+.join-container { background: var(--glass); padding: 50px; border-radius: 40px; border: 1px solid var(--border); max-width: 650px; margin: 50px auto; }
+select, input, textarea {
+    width: 100%; padding: 16px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border); color: white; border-radius: 12px; font-family: 'Cairo';
+}
+select option { background: #111 !important; color: white !important; }
+.dynamic-fields { display: none; padding: 15px; background: rgba(255,0,0,0.05); border-radius: 12px; margin-bottom: 20px; }
