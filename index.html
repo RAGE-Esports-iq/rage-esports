@@ -9,51 +9,48 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="news-ticker"><div class="ticker-content" id="ticker-text">Welcome to Rage Esports...</div></div>
+
     <nav>
         <div class="logo"><img src="logo.png"> <div>RAGE <span>ESPORTS</span></div></div>
         <ul class="nav-links">
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#teams">الفرق</a></li>
-            <li><a href="#gallery">المعرض</a></li>
-            <li><a href="#join">انضم إلينا</a></li>
+            <li><a href="#home" data-i18n="nav_home">الرئيسية</a></li>
+            <li><a href="#teams" data-i18n="nav_teams">الفرق</a></li>
+            <li><a href="#gallery" data-i18n="nav_gallery">المعرض</a></li>
+            <li><a href="#join" data-i18n="nav_join">انضم إلينا</a></li>
         </ul>
         <button class="lang-btn" onclick="toggleLang()">EN</button>
     </nav>
 
-    <section id="home" style="min-height:50vh; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-        <h1 style="font-size:clamp(2rem, 8vw, 4rem); text-shadow: 0 0 20px red; margin:0;">WE ARE RAGE</h1>
-        <div style="display:flex; gap:40px; margin-top:30px;">
-            <div style="text-align:center;"><h2 id="db-cups" style="color:red; font-size:2.5rem; margin:0;">0</h2><p>بطولة</p></div>
-            <div style="text-align:center;"><h2 id="db-members" style="color:red; font-size:2.5rem; margin:0;">+0</h2><p>عضو</p></div>
+    <section id="home" style="min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+        <h1 data-i18n="hero_title" style="font-size:clamp(2.5rem, 10vw, 5rem); text-shadow: 0 0 20px red;">نحن ريج</h1>
+        <div style="display:flex; gap:50px; margin-top:30px;">
+            <div><h2 id="db-cups" style="color:red; font-size:3rem; margin:0;">0</h2><p data-i18n="stats_cups">بطولة</p></div>
+            <div><h2 id="db-members" style="color:red; font-size:3rem; margin:0;">+0</h2><p data-i18n="stats_members">عضو</p></div>
         </div>
     </section>
 
-    <section id="teams"><h2 style="text-align:center; color:red;">🎮 فرقنا</h2><div class="games-grid" id="games-container"></div></section>
-    <section id="gallery"><h2 style="text-align:center; color:red;">📸 المعرض</h2><div class="games-grid" id="gallery-container"></div></section>
+    <section id="teams"><h2 style="text-align:center; color:red;" data-i18n="sec_teams">🎮 فرقنا</h2><div class="games-grid" id="games-container"></div></section>
+    
+    <section id="gallery"><h2 style="text-align:center; color:red;" data-i18n="sec_gallery">📸 المعرض</h2><div class="games-grid" id="gallery-container"></div></section>
 
     <section id="join">
-        <div style="max-width:450px; margin:auto; background:rgba(0,0,0,0.8); padding:25px; border-radius:25px; border:1px solid var(--border);">
-            <h2 style="text-align:center; color:red;">انضم إلينا</h2>
+        <div style="max-width:450px; margin:auto; background:rgba(0,0,0,0.85); padding:30px; border-radius:30px; border:1px solid var(--border);">
+            <h2 style="text-align:center; color:red;" data-i18n="sec_join">انضم إلينا</h2>
             <form id="join-form">
                 <input type="text" name="name" placeholder="الاسم" required>
                 <input type="number" name="age" placeholder="العمر" required>
-                <input type="tel" name="phone" placeholder="الواتساب" required>
-                
+                <input type="tel" name="phone" placeholder="رقم الواتساب" required>
                 <select id="role-select" name="role" onchange="showRoleFields()" required>
                     <option value="">اختر الرتبة</option>
                     <option value="player">لاعب</option>
                     <option value="content">صانع محتوى</option>
                     <option value="staff">إداري</option>
                 </select>
-
-                <div id="fields-player" class="dynamic-fields">
-                    <select id="join-game-select" name="game"></select>
-                    <input type="text" name="rank" placeholder="رانكك">
-                </div>
+                <div id="fields-player" class="dynamic-fields"><select id="join-game-select" name="game"></select></div>
                 <div id="fields-content" class="dynamic-fields"><input type="text" name="link" placeholder="رابط قناتك"></div>
-                <div id="fields-staff" class="dynamic-fields"><textarea name="exp" placeholder="خبرتك"></textarea></div>
-
-                <button type="submit" style="width:100%; padding:15px; background:red; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">إرسال</button>
+                <div id="fields-staff" class="dynamic-fields"><textarea name="exp" placeholder="خبرتك السابقة"></textarea></div>
+                <button type="submit" data-i18n="form_btn" style="width:100%; padding:15px; background:red; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">إرسال</button>
             </form>
         </div>
     </section>
