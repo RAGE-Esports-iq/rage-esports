@@ -1,79 +1,67 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="rage-site">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAGE ESPORTS | OFFICIAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>RAGE ESPORTS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="news-ticker">
-        <div class="ticker-wrapper"><span id="ticker-text">🏆 RAGE ON TOP .. ننتظر انضمامك ..</span></div>
-    </div>
-
     <nav>
-        <div class="logo"><img src="logo.png" alt="RAGE"> <div>RAGE <span>ESPORTS</span></div></div>
+        <div class="logo"><img src="logo.png"> <div>RAGE <span>ESPORTS</span></div></div>
         <ul class="nav-links">
-            <li><a href="#home" id="lnk-home">الرئيسية</a></li>
-            <li><a href="#teams" id="lnk-teams">الفرق</a></li>
-            <li><a href="#gallery" id="lnk-gallery">المعرض</a></li>
-            <li><a href="#join" id="lnk-join">انضم لنا</a></li>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#teams">الفرق</a></li>
+            <li><a href="#gallery">المعرض</a></li>
+            <li><a href="#join">انضم إلينا</a></li>
         </ul>
         <button class="lang-btn" onclick="toggleLang()">EN</button>
     </nav>
 
-    <section id="home" class="hero">
-        <h1 id="hero-title">نحن ريج</h1>
-        <p id="hero-desc">نصنع المجد، نحطم القيود.</p>
-        <div style="display:flex; gap:50px; margin: 40px 0;">
-            <div><h2 id="db-cups" style="color:red; font-size:3.5rem; margin:0;">0</h2><p>بطولة</p></div>
-            <div><h2 id="db-members" style="color:red; font-size:3.5rem; margin:0;">+0</h2><p>عضو</p></div>
+    <section id="home" style="min-height:50vh; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <h1 style="font-size:clamp(2rem, 8vw, 4rem); text-shadow: 0 0 20px red; margin:0;">WE ARE RAGE</h1>
+        <div style="display:flex; gap:40px; margin-top:30px;">
+            <div style="text-align:center;"><h2 id="db-cups" style="color:red; font-size:2.5rem; margin:0;">0</h2><p>بطولة</p></div>
+            <div style="text-align:center;"><h2 id="db-members" style="color:red; font-size:2.5rem; margin:0;">+0</h2><p>عضو</p></div>
         </div>
     </section>
 
-    <section id="teams">
-        <h2 style="text-align:center; font-size:2.8rem; margin-top:50px;" id="teams-title">الفرق الرسمية</h2>
-        <div class="games-grid" id="games-container"></div>
-    </section>
-
-    <section id="gallery">
-        <h2 style="text-align:center; font-size:2.8rem;" id="gallery-title">مكتبة الميديا</h2>
-        <div class="games-grid" id="gallery-container"></div>
-    </section>
+    <section id="teams"><h2 style="text-align:center; color:red;">🎮 فرقنا</h2><div class="games-grid" id="games-container"></div></section>
+    <section id="gallery"><h2 style="text-align:center; color:red;">📸 المعرض</h2><div class="games-grid" id="gallery-container"></div></section>
 
     <section id="join">
-        <div class="join-container">
-            <h2 id="join-title" style="text-align:center; margin-bottom:30px;">تقديم طلب انضمام</h2>
+        <div style="max-width:450px; margin:auto; background:rgba(0,0,0,0.8); padding:25px; border-radius:25px; border:1px solid var(--border);">
+            <h2 style="text-align:center; color:red;">انضم إلينا</h2>
             <form id="join-form">
-                <input type="text" name="name" id="inp-name" placeholder="الاسم الكامل" required>
-                <input type="tel" name="phone" id="inp-phone" placeholder="رقم الواتساب" required>
+                <input type="text" name="name" placeholder="الاسم" required>
+                <input type="number" name="age" placeholder="العمر" required>
+                <input type="tel" name="phone" placeholder="الواتساب" required>
+                
                 <select id="role-select" name="role" onchange="showRoleFields()" required>
                     <option value="">اختر الرتبة</option>
-                    <option value="player">لاعب محترف (Pro Player)</option>
-                    <option value="content">صانع محتوى (Content Creator)</option>
-                    <option value="staff">إداري (Staff)</option>
+                    <option value="player">لاعب</option>
+                    <option value="content">صانع محتوى</option>
+                    <option value="staff">إداري</option>
                 </select>
 
                 <div id="fields-player" class="dynamic-fields">
                     <select id="join-game-select" name="game"></select>
-                    <input type="text" name="rank" placeholder="أعلى رانك وصلته">
+                    <input type="text" name="rank" placeholder="رانكك">
                 </div>
                 <div id="fields-content" class="dynamic-fields"><input type="text" name="link" placeholder="رابط قناتك"></div>
-                <div id="fields-staff" class="dynamic-fields"><textarea name="exp" placeholder="خبرتك السابقة"></textarea></div>
+                <div id="fields-staff" class="dynamic-fields"><textarea name="exp" placeholder="خبرتك"></textarea></div>
 
-                <button type="submit" class="btn" id="join-btn" style="width:100%; cursor:pointer; background:red; color:white; border:none; padding:15px; border-radius:50px; font-weight:bold;">إرسال الطلب</button>
+                <button type="submit" style="width:100%; padding:15px; background:red; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">إرسال</button>
             </form>
-            <p id="form-status" style="display:none; text-align:center; margin-top:20px; font-weight:bold;"></p>
         </div>
     </section>
 
     <div class="social-container">
         <a href="https://discord.gg/3rFdTHPz" class="social-icon discord" target="_blank"><i class="fab fa-discord"></i></a>
         <a href="https://www.instagram.com/rageesportsiq" class="social-icon instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com/@rageesports1?si=XjDcuSSi0nrVxygL" class="social-icon youtube" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://youtube.com/@rageesports1" class="social-icon youtube" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://www.tiktok.com/@rageesportsiq" class="social-icon tiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
     </div>
 
